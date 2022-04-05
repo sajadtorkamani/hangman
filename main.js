@@ -61,12 +61,10 @@ function getRandomGuessWord() {
   // function is executed so our word will also be random.
   const guessWord = words[randomIndex]
 
-  // Save the guess word into our global variables so we can access it from
-  // other functions.
-  window.state.guessWord = guessWord
-
   // Print the guess word for debugging.
   console.log({ guessWord })
+
+  return guessWord
 }
 
 /**

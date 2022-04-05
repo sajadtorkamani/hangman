@@ -1,16 +1,17 @@
 /**
- * The entry point to all our code. Having one `main` function can help you 
+ * The entry point to all our code. Having one `main` function can help you
  * more easily see what code is run in and in what order.
  */
 function main() {
-  // Usually, JavaScript variables are only available inside the function they 
+  // Usually, JavaScript variables are only available inside the function they
   // are declared in. But anything we attach to the `window` object will be
   // available from EVERYWHERE.
-  // We will add a property called `globals` but you can call this anything 
+  // We will add a property called `globals` but you can call this anything
   // (e.g., window.myLovelyGlobals or window.myImportantVariables).
   window.globals = {}
 
   setRandomGuessWord()
+  updateGuessWordMask()
   createButtons()
 }
 
@@ -26,16 +27,23 @@ function setRandomGuessWord() {
   // Get random index based on the length of the `words` array.
   const randomIndex = Math.floor(Math.random() * words.length)
 
-  // Select element using random index. Index will be random so everytime this 
+  // Select element using random index. Index will be random so everytime this
   // function is executed so our word will also be random.
   const guessWord = words[randomIndex]
 
-  // Save the guess word into our global variables so we can access it from 
+  // Save the guess word into our global variables so we can access it from
   // other functions.
   window.globals.guessWord = guessWord
 
   // Print the guess word for debugging.
   console.log({ guessWord })
+}
+
+function updateGuessWordMask() {
+  const guessWord = window.globals.guessWord
+  const guessWordMaskElement = document.querySelector('.guess-word-mask')
+  const guessWordMask = '_'.repeat(guessWord.length)
+  guessWordMaskElement.innerText = guessWordMask
 }
 
 /**

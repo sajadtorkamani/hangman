@@ -16,7 +16,8 @@ h1 {
   margin-bottom: 10px;
 }
 
-.guess {
+.guess-word-mask {
+  font-size: 20px;
   margin-bottom: 20px;
 }
 

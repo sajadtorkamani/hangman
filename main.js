@@ -94,19 +94,32 @@ function setRandomGuessWord() {
 function renderMask() {
   // Get the guess word from our global variables (set in the function
   // `setRandomGuessWord`).
-  const guessWord = window.state.guessWord
+  const guessWord = getState('guessWord')
+  const correctGuesses = getState('correctGuesses')
 
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
-  // Clear contents because we'll re-render it
+  // Clear contents because we'll dre-render it.
   maskContainer.innerHTML = ''
 
   // Create a letter mask (underscore) for each letter in the guess word.
   // We use `guessWord.length` to create the correct number of masks.
   for (let index = 0; index < guessWord.length; index++) {
-    const letterMask = document.createElement('span') // Create span
-    letterMask.className = 'letter-mask' // We'll use this class name in CSS
-    letterMask.innerText = '_' // Set content of span to underscore
+    // Get the letter in guess word that is contained in this index position.
+    const guessWordLetter = guessWord[index]
+
+    const letterMask = document.createElement('span')
+    letterMask.className = 'letter-mask'
+
+    // If the user has correctly guesses a letter, display the letter instead
+    // of a mask.
+    if (correctGuesses.includes(guessWordLetter)) {
+      letterMask.innerText = guessWordLetter
+
+    // If the user hasn't guessed the letter yet, display mask.
+    } else {
+      letterMask.innerText = '_' 
+    }
     maskContainer.appendChild(letterMask) // Add mask to the mask container
   }
 }

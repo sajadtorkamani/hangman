@@ -7,6 +7,7 @@
     <title>Hangman</title>
     <link rel="stylesheet" href="main.css" />
   </head>
+
   <body>
     <div class="page-wrapper">
       <div class="game-screen">
@@ -27,13 +28,31 @@
         </div>
       </div>
 
+      <!-- This section is hidden by default with CSS. It's only shown when 
+      the user has correctly guessed the word. -->
+      <div class="game-finished-screen">
+        <h1>Well done</h1>
+        <p>You correctly guessed the word:</p>
+
+        <div class="correct-word"></div>
+
+        <button onclick="window.location.reload()" class="play-again-button">
+          Play again
+        </button>
+      </div>
+
+      <!-- This section is hidden by default with CSS. It's only shown when 
+      the user has run out of guesses. -->
       <div class="game-over-screen">
         <h1>Game over</h1>
         <p>You ran out of guesses. The correct word was:</p>
-        <div class="correct-word"></div>
-        <button onclick="window.location.reload()">Play again</button>
-      </div>
 
+        <div class="correct-word"></div>
+
+        <button onclick="window.location.reload()" class="play-again-button">
+          Play again
+        </button>
+      </div>
     </div>
 
     <script src="main.js"></script>

@@ -21,6 +21,26 @@ h1 {
   margin-bottom: 15px;
 }
 
+p {
+  margin-bottom: 16px;
+}
+
+.play-again-button {
+  padding: 5px 7px;
+}
+
+.play-again-button:hover {
+  cursor: pointer;
+}
+
+.correct-word {
+  color: green;
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 /* 
 * -------------------------------------------------
 * Game screen 
@@ -59,25 +79,26 @@ h1 {
 
 /* 
 * -------------------------------------------------
-* Game overscreen 
+* Game over screen 
 * -------------------------------------------------
 */
 .game-over-screen {
   display: none;
 }
 
-.game-over-screen .correct-word {
+.game-over-screen p {
+  color: red;
+}
+
+/* 
+* -------------------------------------------------
+* Game finished screen 
+* -------------------------------------------------
+*/
+.game-finished-screen {
+  display: none;
+}
+
+.game-finished-screen p {
   color: green;
-  font-size: 50px;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.game-over-screen button {
-  padding: 5px 7px;
-}
-
-.game-over-screen button:hover {
-  cursor: pointer;
 }

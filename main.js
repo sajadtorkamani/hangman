@@ -60,22 +60,46 @@ function setState(stateVariable, newValue) {
  * the new `numGuessesRemaining` value of 3.
  */
 function render() {
-  checkIfGameOver()
+  checkIfGameFinished()
 
   renderGuessCount()
   renderMask()
   renderButtons()
 }
 
-function checkIfGameOver() {
+function checkIfGameFinished() {
   if (getNumGuessesRemaining() <= 0) {
     renderGameOverScreen()
+  }
+
+  if (hasCorrectlyGuessedAllLetters()) {
+    renderGameFinishedScreen()
   }
 }
 
 function renderGameOverScreen() {
-  document.querySelector('.game-screen').style.display = 'none'
+  hideGameScreen()
   document.querySelector('.game-over-screen').style.display = 'block'
+  showCorrectWord()
+}
+
+function hasCorrectlyGuessedAllLetters() {
+  return (
+    getState('correctGuesses').length === new Set(getState('guessWord')).size
+  )
+}
+
+function renderGameFinishedScreen() {
+  hideGameScreen()
+  document.querySelector('.game-finished-screen').style.display = 'block'
+  showCorrectWord()
+}
+
+function hideGameScreen() {
+  document.querySelector('.game-screen').style.display = 'none'
+}
+
+function showCorrectWord() {
   document.querySelector('.correct-word').innerText = getState('guessWord')
 }
 

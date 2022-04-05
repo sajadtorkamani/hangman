@@ -1,6 +1,6 @@
 /**
  * The entry point to all our code. Having one `main` function can help you
- * more easily see what code is run in and in what order.
+ * more easily see what functions are executed and in what order.
  */
 function main() {
   // Usually, JavaScript variables are only available inside the function they

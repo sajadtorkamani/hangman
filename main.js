@@ -12,8 +12,13 @@ function main() {
     // We will update this very time the user makes a wrong guess.
     guessesRemaining: 5,
 
-    // We set this inside `setRandomGuessWord`word
-    guessWord: undefined,
+    // We set this inside `setRandomGuessWord` word
+    guessWord: undefined, // string
+
+    // This will be used to keep track of how much the user has guessed so far.
+    // For example, if `guessWord` is apple and user has guessed the letters "a"
+    // and "l", then we'll update this to be `a**le.
+    mask: undefined // string
   }
 
   setRandomGuessWord()
@@ -53,8 +58,8 @@ function setState(stateVariable, newValue) {
  * displays our latest state variables.
  *
  * For example, when a user makes a wrong guess, we can call
- * `setState('numGuessesRemaining', 3)`. `setState` will then execute this 
- * `render` function so that our application is re-rendered and now displays 
+ * `setState('numGuessesRemaining', 3)`. `setState` will then execute this
+ * `render` function so that our application is re-rendered and now displays
  * the new `numGuessesRemaining` value of 3.
  */
 function render() {
@@ -158,7 +163,7 @@ function handleUserGuess(letterGuessed) {
     console.log(`CORRECT: ${letterGuessed} is included in ${guessWord}.`)
   } else {
     const previousGuessesRemaining = getState('guessesRemaining')
-    setState('guessesRemaining', getState('guessesRemaining') - 1)
+    setState('guessesRemaining', previousGuessesRemaining - 1)
   }
 }
 

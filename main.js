@@ -9,8 +9,8 @@ function main() {
   // We will add a property called `state` but you can call this anything
   // (e.g., window.myLovelyGlobals or window.myImportantVariables).
   window.state = {
-    // We set this inside `setRandomGuessWord` word
-    guessWord: undefined,
+    // This is the word the user has to guess
+    guessWord: getRandomGuessWord(),
 
     // This will contain all the letters that the user has guessed correctly.
     correctGuesses: [],
@@ -19,7 +19,6 @@ function main() {
     incorrectGuesses: [],
   }
 
-  setRandomGuessWord()
   render()
 }
 
@@ -47,6 +46,27 @@ function setState(stateVariable, newValue) {
 
   window.state[stateVariable] = newValue
   render()
+}
+
+/**
+ * Randomly a word to be guessed.
+ */
+function getRandomGuessWord() {
+  const words = ['apple', 'orange', 'banana', 'pear', 'cucumber', 'kiwi']
+
+  // Get random index based on the length of the `words` array.
+  const randomIndex = Math.floor(Math.random() * words.length)
+
+  // Select element using random index. Index will be random so everytime this
+  // function is executed so our word will also be random.
+  const guessWord = words[randomIndex]
+
+  // Save the guess word into our global variables so we can access it from
+  // other functions.
+  window.state.guessWord = guessWord
+
+  // Print the guess word for debugging.
+  console.log({ guessWord })
 }
 
 /**
@@ -101,27 +121,6 @@ function hideGameScreen() {
 
 function showCorrectWord() {
   document.querySelector('.correct-word').innerText = getState('guessWord')
-}
-
-/**
- * Randomly a word to be guessed.
- */
-function setRandomGuessWord() {
-  const words = ['apple', 'orange', 'banana', 'pear', 'cucumber', 'kiwi']
-
-  // Get random index based on the length of the `words` array.
-  const randomIndex = Math.floor(Math.random() * words.length)
-
-  // Select element using random index. Index will be random so everytime this
-  // function is executed so our word will also be random.
-  const guessWord = words[randomIndex]
-
-  // Save the guess word into our global variables so we can access it from
-  // other functions.
-  window.state.guessWord = guessWord
-
-  // Print the guess word for debugging.
-  console.log({ guessWord })
 }
 
 /**

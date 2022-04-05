@@ -163,12 +163,9 @@ function renderMask() {
 }
 
 function renderGuessCount() {
-  const NUM_GUESSES_ALLOWED = 5
-  const guessesRemaining =
-    NUM_GUESSES_ALLOWED - getState('incorrectGuesses').length
-  const guessesRemainingElement = document.querySelector('.guesses-remaining')
-
-  guessesRemainingElement.innerText = `You have ${guessesRemaining} guesses remaining.`
+  document.querySelector(
+    '.guesses-remaining'
+  ).innerText = `You have ${getNumGuessesRemaining()} guesses remaining.`
 }
 
 /**

@@ -24,6 +24,39 @@ function main() {
 // Run out main function to run all our code.
 main()
 
+/**
+ * We'll use this function to get a state variable.
+ */
+function getState(stateVariable) {
+  if (!window.state.hasOwnProperty(stateVariable)) {
+    throw new Error(`No state variable named: ${stateVariable}`)
+  }
+
+  return window.state[stateVariable]
+}
+
+/**
+ * We'll use this function to set a state variable and then re-render the UI.
+ */
+function setState(stateVariable, newValue) {
+  if (!window.state.hasOwnProperty(stateVariable)) {
+    throw new Error(`No state variable named: ${stateVariable}`)
+  }
+
+  window.state[stateVariable] = newValue
+  render()
+}
+
+/**
+ * This function will render our application. We'll execute this everytime we
+ * update a state variable (e.g., numGuessesRemaining) so that our application
+ * displays our latest state variables.
+ *
+ * For example, when a user makes a wrong guess, we can call
+ * `setState('numGuessesRemaining', 3)`. `setState` will then execute this 
+ * `render` function so that our application is re-rendered and now displays 
+ * the new `numGuessesRemaining` value of 3.
+ */
 function render() {
   renderMask()
   renderGuessCount()
@@ -140,21 +173,4 @@ function isCorrectGuess(letterGuessed) {
 
   // Check if `guessWord` includes `letterGuessed`
   return guessWord.includes(letterGuessed)
-}
-
-function getState(stateVariable) {
-  if (!window.state.hasOwnProperty(stateVariable)) {
-    throw new Error(`No state variable named: ${stateVariable}`)
-  }
-
-  return window.state[stateVariable]
-}
-
-function setState(stateVariable, newValue) {
-  if (!window.state.hasOwnProperty(stateVariable)) {
-    throw new Error(`No state variable named: ${stateVariable}`)
-  }
-  
-  window.state[stateVariable] = newValue
-  render()
 }

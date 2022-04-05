@@ -3,6 +3,8 @@
  * more easily see what functions are executed and in what order.
  */
 function main() {
+  const guessWord = getRandomGuessWord()
+
   // Usually, JavaScript variables are only available inside the function they
   // are declared in. But anything we attach to the `window` object will be
   // available from EVERYWHERE.
@@ -17,7 +19,7 @@ function main() {
 
   window.state = {
     // This is the word the user has to guess
-    guessWord: getRandomGuessWord(),
+    guessWord: guessWord,
 
     // This will contain all the letters that the user has guessed correctly.
     correctGuesses: [],
@@ -95,6 +97,7 @@ function render() {
 function checkIfGameFinished() {
   if (getNumGuessesRemaining() <= 0) {
     renderGameOverScreen()
+    return
   }
 
   if (hasCorrectlyGuessedAllLetters()) {
@@ -104,8 +107,8 @@ function checkIfGameFinished() {
 
 function renderGameOverScreen() {
   hideGameScreen()
-  document.querySelector('.game-over-screen').style.display = 'block'
   showCorrectWord()
+  document.querySelector('.game-over-screen').style.display = 'block'
 }
 
 function hasCorrectlyGuessedAllLetters() {
@@ -116,8 +119,8 @@ function hasCorrectlyGuessedAllLetters() {
 
 function renderGameFinishedScreen() {
   hideGameScreen()
-  document.querySelector('.game-finished-screen').style.display = 'block'
   showCorrectWord()
+  document.querySelector('.game-finished-screen').style.display = 'block'
 }
 
 function hideGameScreen() {
@@ -125,7 +128,9 @@ function hideGameScreen() {
 }
 
 function showCorrectWord() {
-  document.querySelector('.correct-word').innerText = getState('guessWord')
+  document
+    .querySelectorAll('.correct-word')
+    .forEach((element) => (element.innerText = getState('guessWord')))
 }
 
 /**

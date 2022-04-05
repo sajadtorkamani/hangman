@@ -34,7 +34,6 @@ p {
 }
 
 .correct-word {
-  color: green;
   font-size: 50px;
   font-weight: bold;
   margin-top: 10px;
@@ -84,9 +83,6 @@ p {
 */
 .game-over-screen {
   display: none;
-}
-
-.game-over-screen p {
   color: red;
 }
 
@@ -97,8 +93,5 @@ p {
 */
 .game-finished-screen {
   display: none;
-}
-
-.game-finished-screen p {
   color: green;
 }

@@ -13,12 +13,13 @@ function main() {
     guessesRemaining: 5,
 
     // We set this inside `setRandomGuessWord` word
-    guessWord: undefined, // string
+    guessWord: undefined,
 
-    // This will be used to keep track of how much the user has guessed so far.
-    // For example, if `guessWord` is apple and user has guessed the letters "a"
-    // and "l", then we'll update this to be `a**le.
-    mask: undefined // string
+    // This will contain all the letters that the user has guessed correctly.
+    correctGuesses: [],
+
+    // This will contain all the letters that the user has guessed incorrectly.
+    incorrectGuesses: [],
   }
 
   setRandomGuessWord()
@@ -151,19 +152,14 @@ function createButtons() {
 }
 
 /**
- * Deal with user guess.
- * The `letterGuess` argument will contain the letter that the user guessed.
+ * Deal with user guess. The `letterGuess` argument will contain the letter 
+ * that the user guessed.
  */
 function handleUserGuess(letterGuessed) {
-  // Get the guess word from our global variables (set in the function
-  // `setRandomGuessWord`).
-  const guessWord = window.state.guessWord
-
   if (isCorrectGuess(letterGuessed)) {
-    console.log(`CORRECT: ${letterGuessed} is included in ${guessWord}.`)
+    addCorrectGuess(letterGuessed)
   } else {
-    const previousGuessesRemaining = getState('guessesRemaining')
-    setState('guessesRemaining', previousGuessesRemaining - 1)
+    addIncorrectGuess(letterGuessed)
   }
 }
 
@@ -172,10 +168,26 @@ function handleUserGuess(letterGuessed) {
  * Return true if they did, otherwise return false.
  */
 function isCorrectGuess(letterGuessed) {
-  // Get the guess word from our global variables (set in the function
-  // `setRandomGuessWord`).
-  const guessWord = window.state.guessWord
+  // Check if our guessWord includes `letterGuessed`
+  return getState('guessWord').includes(letterGuessed)
+}
 
-  // Check if `guessWord` includes `letterGuessed`
-  return guessWord.includes(letterGuessed)
+function addCorrectGuess(letter) {
+  console.log(`CORRECT: ${letter} is included in ${getState('guessWord')}.`)
+
+  const previousCorrectGuesses = getState('correctGuesses')
+  const newCorrectGuesses = previousCorrectGuesses.concat([letter])
+
+  setState('correctGuesses', newCorrectGuesses)
+}
+
+function addIncorrectGuess(letter) {
+  console.log(
+    `INCORRECT: ${letter} is not included in ${getState('guessWord')}.`
+  )
+
+  const previousIncorrectGuesses = getState('incorrectGuesses')
+  const newIncorrectGuesses = previousIncorrectGuesses.concat([letter])
+
+  setState('incorrectGuesses', newIncorrectGuesses)
 }

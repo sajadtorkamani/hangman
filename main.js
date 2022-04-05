@@ -3,8 +3,6 @@
  * more easily see what functions are executed and in what order.
  */
 function main() {
-  const guessWord = getRandomGuessWord()
-
   // Usually, JavaScript variables are only available inside the function they
   // are declared in. But anything we attach to the `window` object will be
   // available from EVERYWHERE.
@@ -19,7 +17,7 @@ function main() {
 
   window.state = {
     // This is the word the user has to guess.
-    guessWord: guessWord,
+    guessWord: getRandomGuessWord(),
 
     // This will contain all the letters that the user has guessed correctly.
     correctGuesses: [],
@@ -54,7 +52,7 @@ function setState(stateVariable, newValue) {
   }
 
   window.state[stateVariable] = newValue
-  
+
   render()
 }
 

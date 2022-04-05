@@ -81,7 +81,7 @@ p {
 * Game over screen 
 * -------------------------------------------------
 */
-.game-over-screen {
+.game-lost-screen {
   display: none;
   color: red;
 }
@@ -91,7 +91,7 @@ p {
 * Game finished screen 
 * -------------------------------------------------
 */
-.game-finished-screen {
+.game-won-screen {
   display: none;
   color: green;
 }

@@ -95,47 +95,76 @@ function getRandomGuessWord() {
  * the new `numGuessesRemaining` value of 3.
  */
 function render() {
+  // Every time we render the app, we'll want to check if the user has run out
+  // of guesses or has correctly guessed all the letters. See implementation of
+  // `checkIfGameFinished` for what we do when game is finished.
   checkIfGameFinished()
 
-  renderGuessCount()
+  renderNumGuessesRemaining()
   renderMask()
   renderButtons()
 }
 
+/**
+ * Check if the user has run out of guesses or if they've correctly guessed
+ * all the letters. If so, update the UI to let the user know.
+ */
 function checkIfGameFinished() {
   if (getNumGuessesRemaining() <= 0) {
-    renderGameOverScreen()
+    renderGameLostScreen()
     return
   }
 
   if (hasCorrectlyGuessedAllLetters()) {
-    renderGameFinishedScreen()
+    renderGameWonScreen()
   }
 }
 
-function renderGameOverScreen() {
+/**
+ * Let the user know they've lost the game.
+ */
+function renderGameLostScreen() {
   hideGameScreen()
-  showCorrectWord()
-  document.querySelector('.game-over-screen').style.display = 'block'
+  showGuessWord()
+
+  // Show the game lost screen
+  document.querySelector('.game-lost-screen').style.display = 'block'
 }
 
+/**
+ * Check if user has correctly guessed all letters.
+ */
 function hasCorrectlyGuessedAllLetters() {
-  return (
-    getState('correctGuesses').length === new Set(getState('guessWord')).size
-  )
+  const numUniqueLettersGuessedCorrectly = getState('correctGuesses').length
+  const numUniqueLettersInGuessWord = new Set(getState('guessWord')).size
+
+  return numUniqueLettersGuessedCorrectly === numUniqueLettersInGuessWord
 }
 
-function renderGameFinishedScreen() {
+/**
+ * Let the user know they've won the game.
+ */
+function renderGameWonScreen() {
   hideGameScreen()
-  showCorrectWord()
-  document.querySelector('.game-finished-screen').style.display = 'block'
+  showGuessWord()
+
+  // Show the game won screen
+  document.querySelector('.game-won-screen').style.display = 'block'
 }
 
+/**
+ * Hide the default game screen (i.e. the mask, letter buttons, etc).
+ */
 function hideGameScreen() {
   document.querySelector('.game-screen').style.display = 'none'
 }
 
-function showCorrectWord() {
+/**
+ * Show the guess word. We show this when the game has finished.
+ */
+function showGuessWord() {
+  // We use `document.querySelectorAll` instead of `document.querySelector` in
+  // order to target ALL the elements with the class `correct-word`.
   document
     .querySelectorAll('.correct-word')
     .forEach((element) => (element.innerText = getState('guessWord')))
@@ -154,39 +183,56 @@ function renderMask() {
 
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
-  // Clear contents because we'll dre-render it.
+  // Clear contents because we'll rebuild the contents.
   maskContainer.innerHTML = ''
 
   // Create a letter mask (underscore) for each letter in the guess word.
-  // We use `guessWord.length` to create the correct number of masks.
-  for (let index = 0; index < guessWord.length; index++) {
-    // Get the letter in guess word that is contained in this index position.
-    const guessWordLetter = guessWord[index]
+  // We use `guessWord.length` to create the correct number of letter masks.
+  for (let letterIndex = 0; letterIndex < guessWord.length; letterIndex++) {
+    // Get the letter in the guess word that's contained in this index position.
+    const guessWordLetter = guessWord[letterIndex]
 
     const letterMask = document.createElement('span')
+
+    // We'll add a class so we can style in CSS.
     letterMask.className = 'letter-mask'
 
-    // If the user has correctly guesses a letter, display the letter instead
-    // of a mask.
+    // If the user has correctly guessed the letter, display the letter instead
+    // of a mask. `correctGuesses` is an array of all the letters the user has
+    // correctly guessed.
     if (correctGuesses.includes(guessWordLetter)) {
       letterMask.innerText = guessWordLetter
-
-      // If the user hasn't guessed the letter yet, display mask.
-    } else {
+    }
+    // If the user hasn't guessed the letter yet, display a mask instead of
+    // the letter.
+    else {
       letterMask.innerText = '_'
     }
-    maskContainer.appendChild(letterMask) // Add mask to the mask container
+    // Add letter mask to the mask container.
+    maskContainer.appendChild(letterMask)
   }
 }
 
-function renderGuessCount() {
+/**
+ * Render number of guesses remaining. We call this function inside `render`.
+ * Everytime the user makes a guess, we call `setState` which calls `render`
+ * which then calls this function. This means everytime the user makes a guess,
+ * we update the part of the UI that shows the number of guesses remaining.
+ */
+function renderNumGuessesRemaining() {
   document.querySelector(
     '.guesses-remaining'
   ).innerText = `You have ${getNumGuessesRemaining()} guesses remaining.`
 }
 
 /**
- * Render buttons for each letter.
+ */
+/**
+ * Render buttons for each letter. We call this function inside `render`.
+ * Everytime the user makes a guess, we call `setState` which calls `render`
+ * which then calls this function. This means everytime the user makes a guess,
+ * we will call this function again in order to rebuild the buttons and make
+ * sure the letter that the user just guessed is disabled.
  */
 function renderButtons() {
   // Get the document element where the letter buttons should be added>
@@ -227,7 +273,8 @@ function renderButtons() {
 
 /**
  * Deal with user guess. The `letterGuess` argument will contain the letter
- * that the user guessed.
+ * that the user guessed. We call this function whenever the user clicks a
+ * a letter button.
  */
 function handleUserGuess(letterGuessed) {
   if (isCorrectGuess(letterGuessed)) {
@@ -242,10 +289,14 @@ function handleUserGuess(letterGuessed) {
  * Return true if they did, otherwise return false.
  */
 function isCorrectGuess(letterGuessed) {
-  // Check if our guessWord includes `letterGuessed`
+  // Check if our guess word includes the letter guessed.
   return getState('guessWord').includes(letterGuessed)
 }
 
+/**
+ * Add `letter` to the list of correct guesses. We'll use this list elsewhere
+ * (e.g., to disable letters that the user has already guessed).
+ */
 function addCorrectGuess(letter) {
   console.log(`CORRECT: ${letter} is included in ${getState('guessWord')}.`)
 
@@ -254,6 +305,10 @@ function addCorrectGuess(letter) {
   setState('correctGuesses', newCorrectGuesses)
 }
 
+/**
+ * Add `letter` to the list of incorrect guesses. We'll use this list elsewhere
+ * (e.g., to disable letters that the user has already guessed).
+ */
 function addIncorrectGuess(letter) {
   console.log(
     `INCORRECT: ${letter} is not included in ${getState('guessWord')}.`
@@ -264,10 +319,12 @@ function addIncorrectGuess(letter) {
   setState('incorrectGuesses', newIncorrectGuesses)
 }
 
+/**
+ * Calculate number of guesses remaining.
+ */
 function getNumGuessesRemaining() {
   const NUM_GUESSES_ALLOWED = 5
-  const guessesRemaining =
-    NUM_GUESSES_ALLOWED - getState('incorrectGuesses').length
+  const numIncorrectGuesses = getState('incorrectGuesses').length
 
-  return guessesRemaining
+  return NUM_GUESSES_ALLOWED - numIncorrectGuesses
 }

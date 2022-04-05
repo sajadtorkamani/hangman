@@ -216,7 +216,7 @@ function renderMask() {
 /**
  * Render number of guesses remaining. We call this function inside `render`.
  * Everytime the user makes a guess, we call `setState` which calls `render`
- * which then calls this function. This means everytime the user makes a guess,
+ * which then calls this function. This means every time the user makes a guess,
  * we update the part of the UI that shows the number of guesses remaining.
  */
 function renderNumGuessesRemaining() {
@@ -226,11 +226,9 @@ function renderNumGuessesRemaining() {
 }
 
 /**
- */
-/**
  * Render buttons for each letter. We call this function inside `render`.
  * Everytime the user makes a guess, we call `setState` which calls `render`
- * which then calls this function. This means everytime the user makes a guess,
+ * which then calls this function. This means every time the user makes a guess,
  * we will call this function again in order to rebuild the buttons and make
  * sure the letter that the user just guessed is disabled.
  */

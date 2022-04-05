@@ -98,8 +98,7 @@ function renderMask() {
 
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
-
-  // Empty the content of the mask container.
+  // Clear contents because we'll re-render it
   maskContainer.innerHTML = ''
 
   // Create a letter mask (underscore) for each letter in the guess word.
@@ -127,7 +126,7 @@ function renderGuessCount() {
 function renderButtons() {
   // Get the document element where the letter buttons should be added>
   const buttonsContainer = document.querySelector('.buttons-container')
-
+  // Clear contents because we'll re-render it
   buttonsContainer.innerHTML = ''
 
   // Create letters array

@@ -41,3 +41,7 @@ h1 {
 .buttons-container button:hover {
   cursor: pointer;
 }
+
+.buttons-container button:disabled:hover {
+  cursor: default;
+}

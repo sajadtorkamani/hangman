@@ -8,15 +8,26 @@ function main() {
   // available from EVERYWHERE.
   // We will add a property called `globals` but you can call this anything
   // (e.g., window.myLovelyGlobals or window.myImportantVariables).
-  window.globals = {}
+  window.globals = {
+    // We will update this very time the user makes a wrong guess.
+    guessesRemaining: 5,
+
+    // We set this inside `setRandomGuessWord`word
+    guessWord: undefined,
+  }
 
   setRandomGuessWord()
-  renderMask()
+  render()
   createButtons()
 }
 
 // Run out main function to run all our code.
 main()
+
+function render() {
+  renderMask()
+  renderGuessCount()
+}
 
 /**
  * Randomly a word to be guessed.
@@ -52,6 +63,9 @@ function renderMask() {
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
 
+  // Empty the content of the mask container.
+  maskContainer.innerHTML = ''
+
   // Create a letter mask (underscore) for each letter in the guess word.
   // We use `guessWord.length` to create the correct number of masks.
   for (let index = 0; index < guessWord.length; index++) {
@@ -60,6 +74,13 @@ function renderMask() {
     letterMask.innerText = '_' // Set content of span to underscore
     maskContainer.appendChild(letterMask) // Add mask to the mask container
   }
+}
+
+function renderGuessCount() {
+  const guessesRemaining = window.globals.guessesRemaining
+  const guessesRemainingElement = document.querySelector('.guesses-remaining')
+
+  guessesRemainingElement.innerText = `You have ${guessesRemaining} guesses remaining.`
 }
 
 /**
@@ -104,6 +125,8 @@ function handleUserGuess(letterGuessed) {
     console.log(`CORRECT: ${letterGuessed} is included in ${guessWord}.`)
   } else {
     console.log(`WRONG: ${letterGuessed} is not included in ${guessWord}.`)
+    window.globals.guessesRemaining -= 1
+    render()
   }
 }
 

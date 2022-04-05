@@ -11,7 +11,7 @@ function main() {
   window.globals = {}
 
   setRandomGuessWord()
-  updateGuessWordMask()
+  renderMask()
   createButtons()
 }
 
@@ -39,11 +39,28 @@ function setRandomGuessWord() {
   console.log({ guessWord })
 }
 
-function updateGuessWordMask() {
+/**
+ * Render the mask based on the guess word length and how many correct guesses
+ * the user has made. Call this function everytime the user makes a guess in
+ * order to update it.
+ */
+function renderMask() {
+  // Get the guess word from our global variables (set in the function
+  // `setRandomGuessWord`).
   const guessWord = window.globals.guessWord
-  const guessWordMaskElement = document.querySelector('.guess-word-mask')
-  const guessWordMask = '_'.repeat(guessWord.length)
-  guessWordMaskElement.innerText = guessWordMask
+
+  // Get the HTML element that contains the mask.
+  const maskContainer = document.querySelector('.mask-container')
+
+  for (let index = 0; index < guessWord.length; index++) {
+    const letterMask = document.createElement('span')
+    letterMask.className = 'letter-mask'
+    letterMask.innerText = '_'
+    maskContainer.appendChild(letterMask)
+  }
+
+  // const guessWordMask = '_'.repeat(guessWord.length)
+  // maskContainer.innerText = guessWordMask
 }
 
 /**

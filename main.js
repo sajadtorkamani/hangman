@@ -13,7 +13,7 @@ function main() {
   //
   // Just avoid adding any properties or methods that the window object
   // already has. See below link:
-  // - https://developer.mozilla.org/en-US/docs/Web/API/Window#properties).
+  // - https://developer.mozilla.org/en-US/docs/Web/API/Window#properties.
 
   window.state = {
     // This is the word the user has to guess.

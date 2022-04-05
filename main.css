@@ -28,16 +28,16 @@ h1 {
   margin-left: 6px;
 }
 
-.letters-container {
+.buttons-container {
   /* border: 1px solid black; */
 }
 
-.letters-container button {
+.buttons-container button {
   height: 30px;
   margin: 2px;
   width: 30px;
 }
 
-.letters-container button:hover {
+.buttons-container button:hover {
   cursor: pointer;
 }

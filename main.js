@@ -21,7 +21,6 @@ function main() {
 
   setRandomGuessWord()
   render()
-  createButtons()
 }
 
 // Run out main function to run all our code.
@@ -63,6 +62,7 @@ function setState(stateVariable, newValue) {
 function render() {
   renderMask()
   renderGuessCount()
+  renderButtons()
 }
 
 /**
@@ -122,14 +122,18 @@ function renderGuessCount() {
 }
 
 /**
- * Create buttons for each letter.
+ * Render buttons for each letter.
  */
-function createButtons() {
+function renderButtons() {
   // Get the document element where the letter buttons should be added>
-  const lettersContainer = document.querySelector('.letters-container')
+  const buttonsContainer = document.querySelector('.buttons-container')
+
+  buttonsContainer.innerHTML = ''
 
   // Create letters array
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('')
+
+  const incorrectGuesses = getState('incorrectGuesses')
 
   // Loop over the letters array and create button for each letter.
   letters.forEach((letter) => {
@@ -139,6 +143,10 @@ function createButtons() {
     // Set button text using element.innerText =
     letterButton.innerText = letter
 
+    if (incorrectGuesses.includes(letter)) {
+      letterButton.disabled = true
+    }
+
     // Register a click listener for each button so we can handle each guess
     // using our `handleUserGuess` function.
     letterButton.addEventListener('click', function () {
@@ -146,7 +154,7 @@ function createButtons() {
       handleUserGuess(letter)
     })
 
-    lettersContainer.appendChild(letterButton) // Add button to page
+    buttonsContainer.appendChild(letterButton) // Add button to page
   })
 }
 

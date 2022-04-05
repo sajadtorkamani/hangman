@@ -60,9 +60,23 @@ function setState(stateVariable, newValue) {
  * the new `numGuessesRemaining` value of 3.
  */
 function render() {
-  renderMask()
+  checkIfGameOver()
+
   renderGuessCount()
+  renderMask()
   renderButtons()
+}
+
+function checkIfGameOver() {
+  if (getNumGuessesRemaining() <= 0) {
+    renderGameOverScreen()
+  }
+}
+
+function renderGameOverScreen() {
+  document.querySelector('.game-screen').style.display = 'none'
+  document.querySelector('.game-over-screen').style.display = 'block'
+  document.querySelector('.correct-word').innerText = getState('guessWord')
 }
 
 /**
@@ -210,4 +224,12 @@ function addIncorrectGuess(letter) {
   // Append incorrect guess to list of incorrect guesses
   const newIncorrectGuesses = getState('incorrectGuesses').concat([letter])
   setState('incorrectGuesses', newIncorrectGuesses)
+}
+
+function getNumGuessesRemaining() {
+  const NUM_GUESSES_ALLOWED = 5
+  const guessesRemaining =
+    NUM_GUESSES_ALLOWED - getState('incorrectGuesses').length
+
+  return guessesRemaining
 }

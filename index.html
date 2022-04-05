@@ -9,22 +9,31 @@
   </head>
   <body>
     <div class="page-wrapper">
-      <h1>Hangman</h1>
-
-      <div class="guesses-remaining">
-        <!-- Our JavaScript will update this every time the user makes a 
+      <div class="game-screen">
+        <h1>Hangman</h1>
+        <div class="guesses-remaining">
+          <!-- Our JavaScript will update this every time the user makes a 
           wrong guess. -->
-      </div>
+        </div>
 
-      <div class="mask-container">
-        <!-- Our JavaScript will create the "mask" here (one underscore for 
+        <div class="mask-container">
+          <!-- Our JavaScript will create the "mask" here (one underscore for 
           each letter of the guess word). -->
+        </div>
+
+        <div class="buttons-container">
+          <!-- Our JavaScript will create buttons here for each letter in the 
+          alphabet. -->
+        </div>
       </div>
 
-      <div class="buttons-container">
-        <!-- Our JavaScript will create buttons here for each letter in the 
-          alphabet. -->
+      <div class="game-over-screen">
+        <h1>Game over</h1>
+        <p>You ran out of guesses. The correct word was:</p>
+        <div class="correct-word"></div>
+        <button onclick="window.location.reload()">Play again</button>
       </div>
+
     </div>
 
     <script src="main.js"></script>

@@ -1,3 +1,7 @@
+/* 
+* Base styles
+* -------------------------------------------------
+*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +11,7 @@
 .page-wrapper {
   border: 1px solid #ccc;
   padding: 30px 15px;
-  margin: 20px auto;
+  margin: 30px auto;
   max-width: 530px;
   text-align: center;
 }
@@ -16,6 +20,10 @@ h1 {
   margin-bottom: 15px;
 }
 
+/* 
+* Game screen 
+* -------------------------------------------------
+*/
 .guesses-remaining {
   margin-bottom: 20px;
 }
@@ -32,9 +40,6 @@ h1 {
   margin-left: 6px;
 }
 
-/* .buttons-container { */
-/* } */
-
 .buttons-container button {
   font-size: 18px;
   height: 40px;
@@ -48,4 +53,28 @@ h1 {
 
 .buttons-container button:disabled:hover {
   cursor: default;
+}
+
+/* 
+* Game overscreen 
+* -------------------------------------------------
+*/
+.game-over-screen {
+  display: none;
+}
+
+.game-over-screen .correct-word {
+  color: green;
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.game-over-screen button {
+  padding: 5px 7px;
+}
+
+.game-over-screen button:hover {
+  cursor: pointer;
 }

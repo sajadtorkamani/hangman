@@ -26,6 +26,9 @@ function main() {
     incorrectGuesses: [],
   }
 
+  // We'll render the app based on the initial state. Anytime we update the 
+  // state using `setState`, we'll re-execute the `render` function so that 
+  // our app always uses the latest state.
   render()
 }
 

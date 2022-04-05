@@ -52,15 +52,14 @@ function renderMask() {
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
 
+  // Create a letter mask (underscore) for each letter in the guess word.
+  // We use `guessWord.length` to create the correct number of masks.
   for (let index = 0; index < guessWord.length; index++) {
-    const letterMask = document.createElement('span')
-    letterMask.className = 'letter-mask'
-    letterMask.innerText = '_'
-    maskContainer.appendChild(letterMask)
+    const letterMask = document.createElement('span') // Create span
+    letterMask.className = 'letter-mask' // We'll use this class name in CSS
+    letterMask.innerText = '_' // Set content of span to underscore
+    maskContainer.appendChild(letterMask) // Add mask to the mask container
   }
-
-  // const guessWordMask = '_'.repeat(guessWord.length)
-  // maskContainer.innerText = guessWordMask
 }
 
 /**
@@ -73,14 +72,50 @@ function createButtons() {
   // Create letters array
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('')
 
-  // Loop over the letters array and for each letter:
-  // - Create letter button element (using document.createElement)
-  // - Add letter button to lettersContainer (using element.appendChild)
+  // Loop over the letters array and create button for each letter.
   letters.forEach((letter) => {
+    //  Create letter button element (using document.createElement)
     const letterButton = document.createElement('button')
-    const letterButtonText = document.createTextNode(letter)
-    letterButton.appendChild(letterButtonText)
 
-    lettersContainer.appendChild(letterButton)
+    // Set button text using element.innerText =
+    letterButton.innerText = letter
+
+    // Register a click listener for each button so we can handle each guess
+    // using our `handleUserGuess` function.
+    letterButton.addEventListener('click', function () {
+      // We pass the letter that was guessed to the `handleUserGuess` function
+      handleUserGuess(letter)
+    })
+
+    lettersContainer.appendChild(letterButton) // Add button to page
   })
+}
+
+/**
+ * Deal with user guess.
+ * The `letterGuess` argument will contain the letter that the user guessed.
+ */
+function handleUserGuess(letterGuessed) {
+  // Get the guess word from our global variables (set in the function
+  // `setRandomGuessWord`).
+  const guessWord = window.globals.guessWord
+
+  if (isCorrectGuess(letterGuessed)) {
+    console.log(`CORRECT: ${letterGuessed} is included in ${guessWord}.`)
+  } else {
+    console.log(`WRONG: ${letterGuessed} is not included in ${guessWord}.`)
+  }
+}
+
+/**
+ * Check if the user correctly guessed a letter.
+ * Return true if they did, otherwise return false.
+ */
+function isCorrectGuess(letterGuessed) {
+  // Get the guess word from our global variables (set in the function
+  // `setRandomGuessWord`).
+  const guessWord = window.globals.guessWord
+
+  // Check if `guessWord` includes `letterGuessed`
+  return guessWord.includes(letterGuessed)
 }

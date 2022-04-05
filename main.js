@@ -9,9 +9,6 @@ function main() {
   // We will add a property called `state` but you can call this anything
   // (e.g., window.myLovelyGlobals or window.myImportantVariables).
   window.state = {
-    // We will update this very time the user makes a wrong guess.
-    guessesRemaining: 5,
-
     // We set this inside `setRandomGuessWord` word
     guessWord: undefined,
 
@@ -116,7 +113,9 @@ function renderMask() {
 }
 
 function renderGuessCount() {
-  const guessesRemaining = window.state.guessesRemaining
+  const NUM_GUESSES_ALLOWED = 5
+  const guessesRemaining =
+    NUM_GUESSES_ALLOWED - getState('incorrectGuesses').length
   const guessesRemainingElement = document.querySelector('.guesses-remaining')
 
   guessesRemainingElement.innerText = `You have ${guessesRemaining} guesses remaining.`
@@ -152,7 +151,7 @@ function createButtons() {
 }
 
 /**
- * Deal with user guess. The `letterGuess` argument will contain the letter 
+ * Deal with user guess. The `letterGuess` argument will contain the letter
  * that the user guessed.
  */
 function handleUserGuess(letterGuessed) {
@@ -175,9 +174,8 @@ function isCorrectGuess(letterGuessed) {
 function addCorrectGuess(letter) {
   console.log(`CORRECT: ${letter} is included in ${getState('guessWord')}.`)
 
-  const previousCorrectGuesses = getState('correctGuesses')
-  const newCorrectGuesses = previousCorrectGuesses.concat([letter])
-
+  // Append correct guess to list of correct guesses
+  const newCorrectGuesses = getState('correctGuesses').concat([letter])
   setState('correctGuesses', newCorrectGuesses)
 }
 
@@ -186,8 +184,7 @@ function addIncorrectGuess(letter) {
     `INCORRECT: ${letter} is not included in ${getState('guessWord')}.`
   )
 
-  const previousIncorrectGuesses = getState('incorrectGuesses')
-  const newIncorrectGuesses = previousIncorrectGuesses.concat([letter])
-
+  // Append incorrect guess to list of incorrect guesses
+  const newIncorrectGuesses = getState('incorrectGuesses').concat([letter])
   setState('incorrectGuesses', newIncorrectGuesses)
 }

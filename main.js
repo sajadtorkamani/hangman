@@ -6,9 +6,9 @@ function main() {
   // Usually, JavaScript variables are only available inside the function they
   // are declared in. But anything we attach to the `window` object will be
   // available from EVERYWHERE.
-  // We will add a property called `globals` but you can call this anything
+  // We will add a property called `state` but you can call this anything
   // (e.g., window.myLovelyGlobals or window.myImportantVariables).
-  window.globals = {
+  window.state = {
     // We will update this very time the user makes a wrong guess.
     guessesRemaining: 5,
 
@@ -44,7 +44,7 @@ function setRandomGuessWord() {
 
   // Save the guess word into our global variables so we can access it from
   // other functions.
-  window.globals.guessWord = guessWord
+  window.state.guessWord = guessWord
 
   // Print the guess word for debugging.
   console.log({ guessWord })
@@ -58,7 +58,7 @@ function setRandomGuessWord() {
 function renderMask() {
   // Get the guess word from our global variables (set in the function
   // `setRandomGuessWord`).
-  const guessWord = window.globals.guessWord
+  const guessWord = window.state.guessWord
 
   // Get the HTML element that contains the mask.
   const maskContainer = document.querySelector('.mask-container')
@@ -77,7 +77,7 @@ function renderMask() {
 }
 
 function renderGuessCount() {
-  const guessesRemaining = window.globals.guessesRemaining
+  const guessesRemaining = window.state.guessesRemaining
   const guessesRemainingElement = document.querySelector('.guesses-remaining')
 
   guessesRemainingElement.innerText = `You have ${guessesRemaining} guesses remaining.`
@@ -119,14 +119,13 @@ function createButtons() {
 function handleUserGuess(letterGuessed) {
   // Get the guess word from our global variables (set in the function
   // `setRandomGuessWord`).
-  const guessWord = window.globals.guessWord
+  const guessWord = window.state.guessWord
 
   if (isCorrectGuess(letterGuessed)) {
     console.log(`CORRECT: ${letterGuessed} is included in ${guessWord}.`)
   } else {
-    console.log(`WRONG: ${letterGuessed} is not included in ${guessWord}.`)
-    window.globals.guessesRemaining -= 1
-    render()
+    const previousGuessesRemaining = getState('guessesRemaining')
+    setState('guessesRemaining', getState('guessesRemaining') - 1)
   }
 }
 
@@ -137,8 +136,25 @@ function handleUserGuess(letterGuessed) {
 function isCorrectGuess(letterGuessed) {
   // Get the guess word from our global variables (set in the function
   // `setRandomGuessWord`).
-  const guessWord = window.globals.guessWord
+  const guessWord = window.state.guessWord
 
   // Check if `guessWord` includes `letterGuessed`
   return guessWord.includes(letterGuessed)
+}
+
+function getState(stateVariable) {
+  if (!window.state.hasOwnProperty(stateVariable)) {
+    throw new Error(`No state variable named: ${stateVariable}`)
+  }
+
+  return window.state[stateVariable]
+}
+
+function setState(stateVariable, newValue) {
+  if (!window.state.hasOwnProperty(stateVariable)) {
+    throw new Error(`No state variable named: ${stateVariable}`)
+  }
+  
+  window.state[stateVariable] = newValue
+  render()
 }

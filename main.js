@@ -1,11 +1,12 @@
 /**
- * The entry point to all our code. Having one `main` function can help you
- * more easily see what functions are executed and in what order.
+ * This function is the entry point to all our code. Having one `main` function
+ * can help you more easily see what code is executed and in what order.
  */
 function main() {
   // Usually, JavaScript variables are only available inside the function they
   // are declared in. But anything we attach to the `window` object will be
   // available from EVERYWHERE.
+  // See this video: https://tinyurl.com/js-scope
   //
   // We will add some custom variables inside `window.state` but you can
   // add anything to the `window` object (e.g., window.myLovelyGlobals or
@@ -26,17 +27,19 @@ function main() {
     incorrectGuesses: [],
   }
 
-  // We'll render the app based on the initial state. Anytime we update the 
-  // state using `setState`, we'll re-execute the `render` function so that 
+  // We'll render the app based on the initial state. Anytime we update the
+  // state using `setState`, we'll re-execute the `render` function so that
   // our app always uses the latest state.
   render()
 }
 
-// Run out main function to run all our code.
+// Run the main function to run all our code.
 main()
 
 /**
- * We'll use this function to get a state variable.
+ * We'll use this function to get a state variable from `window.state`.
+ * You could also access `window.state.someVariable` directly so this is only a
+ * shortcut / helper function.
  */
 function getState(stateVariable) {
   if (!window.state.hasOwnProperty(stateVariable)) {
@@ -47,7 +50,9 @@ function getState(stateVariable) {
 }
 
 /**
- * We'll use this function to set a state variable and then re-render the UI.
+ * We'll use this function to set a state variable on `window.state`.
+ * After updating the state, we'll call `render` in order to re-render the UI
+ * and make sure our UI is using the latest state variables.
  */
 function setState(stateVariable, newValue) {
   if (!window.state.hasOwnProperty(stateVariable)) {
@@ -60,16 +65,17 @@ function setState(stateVariable, newValue) {
 }
 
 /**
- * Randomly a word to be guessed.
+ * Get a word to be guessed.
  */
 function getRandomGuessWord() {
+  // List of possible words. You can add as many words as you like.
   const words = ['apple', 'orange', 'banana', 'pear', 'cucumber', 'kiwi']
 
   // Get random index based on the length of the `words` array.
   const randomIndex = Math.floor(Math.random() * words.length)
 
-  // Select element using random index. Index will be random so everytime this
-  // function is executed so our word will also be random.
+  // Select element using random index. Index will be random so every time this
+  // function is executed, our word will also be random.
   const guessWord = words[randomIndex]
 
   // Print the guess word for debugging.
@@ -81,7 +87,7 @@ function getRandomGuessWord() {
 /**
  * This function will render our application. We'll execute this everytime we
  * update a state variable (e.g., numGuessesRemaining) so that our application
- * displays our latest state variables.
+ * uses our latest state variables.
  *
  * For example, when a user makes a wrong guess, we can call
  * `setState('numGuessesRemaining', 3)`. `setState` will then execute this

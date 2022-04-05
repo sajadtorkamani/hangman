@@ -18,7 +18,7 @@ function main() {
   // - https://developer.mozilla.org/en-US/docs/Web/API/Window#properties).
 
   window.state = {
-    // This is the word the user has to guess
+    // This is the word the user has to guess.
     guessWord: guessWord,
 
     // This will contain all the letters that the user has guessed correctly.

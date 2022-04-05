@@ -67,8 +67,8 @@ h1 {
   color: green;
   font-size: 50px;
   font-weight: bold;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .game-over-screen button {

@@ -21,6 +21,10 @@ h1 {
   margin-bottom: 30px;
 }
 
+.guesses-remaining {
+  margin-bottom: 20px;
+}
+
 .letter-mask {
   display: inline-block;
   font-size: 34px;

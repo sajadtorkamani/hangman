@@ -54,6 +54,7 @@ function setState(stateVariable, newValue) {
   }
 
   window.state[stateVariable] = newValue
+  
   render()
 }
 

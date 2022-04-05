@@ -116,9 +116,9 @@ function renderMask() {
     if (correctGuesses.includes(guessWordLetter)) {
       letterMask.innerText = guessWordLetter
 
-    // If the user hasn't guessed the letter yet, display mask.
+      // If the user hasn't guessed the letter yet, display mask.
     } else {
-      letterMask.innerText = '_' 
+      letterMask.innerText = '_'
     }
     maskContainer.appendChild(letterMask) // Add mask to the mask container
   }
@@ -145,6 +145,7 @@ function renderButtons() {
   // Create letters array
   const letters = 'abcdefghijklmnopqrstuvwxyz'.split('')
 
+  const correctGuesses = getState('correctGuesses')
   const incorrectGuesses = getState('incorrectGuesses')
 
   // Loop over the letters array and create button for each letter.
@@ -155,7 +156,8 @@ function renderButtons() {
     // Set button text using element.innerText =
     letterButton.innerText = letter
 
-    if (incorrectGuesses.includes(letter)) {
+    // Disable the button if the user has already guessed the letter.
+    if (correctGuesses.includes(letter) || incorrectGuesses.includes(letter)) {
       letterButton.disabled = true
     }
 
@@ -166,7 +168,8 @@ function renderButtons() {
       handleUserGuess(letter)
     })
 
-    buttonsContainer.appendChild(letterButton) // Add button to page
+    // Add button to page
+    buttonsContainer.appendChild(letterButton)
   })
 }
 
